@@ -9,9 +9,15 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
+    networks:
+      - elasnetwork
   kibana:
     image: "kibana:latest"
     ports:
       - "5601:5601"
+    networks:
+      - elasnetwork
     links:
       - elasticsearch
+networks:
+  elasnetwork:
