@@ -16,12 +16,12 @@ const mapping = {
                 properties: {
                     timeStamp: {type: "date", format: "yyyy-MM-dd HH:mm:ss"},
                     coordinates: {type: "geo_point"},
-                    type: {type: "string", fielddata: true},
+                    type: {type: "keyword"},
                     title: {type: "text"},
                     desc: {type: "text"},
-                    twp: {type: "text", fielddata: true, analyzer: "keyword"},
+                    twp: {type: "keyword"},
                     addr: {type: "text"},
-                    zip: {type: "text"}
+                    zip: {type: "keyword"}
                 }
             }
         }

@@ -124,6 +124,8 @@ Dans Kibana, créez un dashboard qui permet de visualiser :
 
 Pour nous permettre d'évaluer votre travail, ajoutez une capture d'écran du dashboard dans ce répertoire [images](images).
 
+![](images/kibana-dashboard.png)
+
 ### Timelion
 Timelion est un outil de visualisation des timeseries accessible via Kibana à l'aide du bouton : ![](images/timelion.png)
 
