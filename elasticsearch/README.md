@@ -22,7 +22,25 @@ GET <nom de votre index>/_count
 À vous de jouer ! Écrivez les requêtes ElasticSearch permettant de résoudre les problèmes posés.
 
 ```
-TODO : ajouter les requêtes ElasticSearch ici
+POST emergency/call/_search
+{
+  "query": {
+        "bool" : {
+            "must" : {
+                "match_all" : {}
+            },
+            "filter" : {
+                "geo_distance" : {
+                    "distance" : "500m",
+                    "coordinates" : {
+                        "lat" : 40.241493,
+                        "lon" : -75.283783
+                    }
+                }
+            }
+        }
+    }
+}
 ```
 
 ## Kibana
