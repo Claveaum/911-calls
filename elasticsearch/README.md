@@ -43,6 +43,22 @@ POST emergency/call/_search
 }
 ```
 
+### Compter le nombre d'appels par catégorie
+
+```
+POST emergency/call/_search
+{
+  "size": 0,
+  "aggs": {
+    "type_count": {
+      "terms": {
+        "field": "type"
+      }
+    }
+  }
+}
+```
+
 ## Kibana
 
 Dans Kibana, créez un dashboard qui permet de visualiser :

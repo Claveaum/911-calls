@@ -14,8 +14,9 @@ const mapping = {
         mappings: {
             call: {
                 properties: {
-                    timeStamp: {type: "date", format:"yyyy-MM-dd HH:mm:ss"},
+                    timeStamp: {type: "date", format: "yyyy-MM-dd HH:mm:ss"},
                     coordinates: {type: "geo_point"},
+                    type: {type: "string", fielddata: true},
                     title: {type: "text"},
                     desc: {type: "text"},
                     twp: {type: "text"},
@@ -31,6 +32,7 @@ fs.createReadStream('../911.csv')
     .pipe(csv())
     .on('data', (data) => {
         data.coordinates = `${data.lat}, ${data.lng}`;
+        data.type = data.title.split(":", 2)[0];
         documents.push({index: {_index: "emergency", _type: "call"}}, data);
     })
     .on('end', () => {
