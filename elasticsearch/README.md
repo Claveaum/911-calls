@@ -42,6 +42,32 @@ POST emergency/call/_search
     }
 }
 ```
+```
+POST /emergency/call/_search
+{
+  "size": 0,
+  "aggs": {
+    "withOverdose": {
+      "filter": {
+        "term": {
+          "title": "overdose"
+        }
+      },
+    "aggs": {
+      "byTwp": {
+        "terms": {
+          "field": "twp",
+          "size": 3,
+          "order": {
+            "_count": "desc"
+          }
+        }
+      }
+    }
+    }
+  }
+}
+```
 
 ## Kibana
 

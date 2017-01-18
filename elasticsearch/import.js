@@ -18,7 +18,7 @@ const mapping = {
                     coordinates: {type: "geo_point"},
                     title: {type: "text"},
                     desc: {type: "text"},
-                    twp: {type: "text"},
+                    twp: {type: "text", fielddata: true, analyzer: "keyword"},
                     addr: {type: "text"},
                     zip: {type: "text"}
                 }
@@ -35,6 +35,6 @@ fs.createReadStream('../911.csv')
     })
     .on('end', () => {
         esClient.indices.create(mapping)
-            .then(() => esClient.bulk({body: documents}))
+            .then(() => esClient.bulk({body: documents, timeout: "60000ms"}))
             .then(() => console.log("Import succeed"), console.error);
     });
