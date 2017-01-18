@@ -21,6 +21,8 @@ GET <nom de votre index>/_count
 
 À vous de jouer ! Écrivez les requêtes ElasticSearch permettant de résoudre les problèmes posés.
 
+### Nombre d'appels autour de Lansdale
+
 ```
 POST emergency/call/_search
 {
@@ -42,6 +44,25 @@ POST emergency/call/_search
     }
 }
 ```
+
+### Compter le nombre d'appels par catégorie
+
+```
+POST emergency/call/_search
+{
+  "size": 0,
+  "aggs": {
+    "type_count": {
+      "terms": {
+        "field": "type"
+      }
+    }
+  }
+}
+```
+
+### Top 3 des villes avec le plus d'appels pour overdose
+
 ```
 POST /emergency/call/_search
 {
@@ -64,22 +85,6 @@ POST /emergency/call/_search
         }
       }
     }
-    }
-  }
-}
-```
-
-### Compter le nombre d'appels par catégorie
-
-```
-POST emergency/call/_search
-{
-  "size": 0,
-  "aggs": {
-    "type_count": {
-      "terms": {
-        "field": "type"
-      }
     }
   }
 }
