@@ -61,6 +61,30 @@ POST emergency/call/_search
 }
 ```
 
+### Top 3 des mois ayant comptabilisé le plus d'appels
+
+On ne peut pas limiter le nombre de réponses de l'aggrégation dans la requête,
+il faudrait donc le faire dans le code de l'application utilisant la réponse.
+
+```
+POST emergency/call/_search
+{
+  "size": 0,
+  "aggs": {
+    "calls_per_month": {
+      "date_histogram": {
+        "field": "timeStamp",
+        "interval": "month",
+        "format": "yyyy-MM",
+        "order": {
+          "_count": "desc"
+        }
+      }
+    }
+  }
+}
+```
+
 ### Top 3 des villes avec le plus d'appels pour overdose
 
 ```
