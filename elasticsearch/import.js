@@ -1,17 +1,40 @@
-var elasticsearch = require('elasticsearch');
-var csv = require('csv-parser');
-var fs = require('fs');
+const elasticsearch = require('elasticsearch');
+const csv = require('csv-parser');
+const fs = require('fs');
 
-var esClient = new elasticsearch.Client({
-  host: 'localhost:9200',
-  log: 'error'
+const esClient = new elasticsearch.Client({
+    host: 'localhost:9200',
+    log: 'error'
 });
+
+const documents = [];
+const mapping = {
+    index: "emergency",
+    body: {
+        mappings: {
+            call: {
+                properties: {
+                    timeStamp: {type: "date", format:"yyyy-MM-dd HH:mm:ss"},
+                    coordinates: {type: "geo_point"},
+                    title: {type: "text"},
+                    desc: {type: "text"},
+                    twp: {type: "text"},
+                    addr: {type: "text"},
+                    zip: {type: "text"}
+                }
+            }
+        }
+    }
+};
 
 fs.createReadStream('../911.csv')
     .pipe(csv())
-    .on('data', data => {
-      // TODO extract one line from CSV
+    .on('data', (data) => {
+        data.coordinates = `${data.lat}, ${data.lng}`;
+        documents.push({index: {_index: "emergency", _type: "call"}}, data);
     })
     .on('end', () => {
-      // TODO insert data to ES
+        esClient.indices.create(mapping)
+            .then(() => esClient.bulk({body: documents}))
+            .then(() => console.log("Import succeed"), console.error);
     });
